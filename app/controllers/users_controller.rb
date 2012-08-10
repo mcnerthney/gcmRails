@@ -16,12 +16,24 @@ class UsersController < ApplicationController
   def new
     @user = User.new
   end
+  
+  def register
+    @user = User.find_by_email(params[:email])
+    if @user != nil 
+      @user.update_attribute(:Gcmid, params[:gid])
+      redirect_to @user
+	else 
+      redirect_to root_path
+    end
+    
+  end
+  
 
   def create
     @user = User.new(params[:user])
     if @user.save
       sign_in @user
-      flash[:success] = "Welcome to the Sample App!"
+      flash[:success] = "Welcome to the Android Push Test App!"
       redirect_to @user
     else
       render 'new'
