@@ -81,7 +81,7 @@ class PhonesController < ApplicationController
   def register
     @phone = Phone.find_by_deviceid(params[:deviceid])
     if @phone != nil 
-      @phone.update_attribute(:gcmid, params[:gcmid])
+      @phone.gcmid = params[:gcmid]
 
 	else 
 	  @phone = Phone.new
@@ -89,17 +89,22 @@ class PhonesController < ApplicationController
 	  @phone.gcmid    = params[:gcmid]
 	  @phone.save!
     end
-    
+   
+    @d = Gcm::Device.new
+    @d.registration_id = @phone.gcmid
+    @d.save!
+
     redirect_to @phone
     
   end
   
   def unregister
     @phone = Phone.find_by_deviceid(params[:deviceid])
+
     if @phone != nil 
-      @phone.update_attribute(:gcmid, nil)
+      Gcm::Device.delete(@phone.gcmid)
+      @phone.delete
     end
-    
     redirect_to @phone
     
   end
