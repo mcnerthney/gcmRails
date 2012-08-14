@@ -82,13 +82,12 @@ class PhonesController < ApplicationController
     @phone = Phone.find_by_deviceid(params[:deviceid])
     if @phone != nil 
       @phone.gcmid = params[:gcmid]
-
 	else 
 	  @phone = Phone.new
 	  @phone.deviceid = params[:deviceid]
 	  @phone.gcmid    = params[:gcmid]
-	  @phone.save!
     end
+    @phone.save!
    
     @d = Gcm::Device.new
     @d.registration_id = @phone.gcmid
@@ -102,8 +101,11 @@ class PhonesController < ApplicationController
     @phone = Phone.find_by_deviceid(params[:deviceid])
 
     if @phone != nil 
-      Gcm::Device.delete(@phone.gcmid)
-      @phone.delete
+      if @phone.gcmid != nil 
+         Gcm::Device.delete(@phone.gcmid)
+      end
+      @phone.gcmid = nil
+      @phone.save!
     end
     redirect_to @phone
     
