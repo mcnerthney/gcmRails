@@ -89,7 +89,10 @@ class PhonesController < ApplicationController
     end
     @phone.save!
    
-    @d = Gcm::Device.new
+    @d = Gcm::Device.find_by_registration_id(@phone.gcmid)
+    if @d == nil 
+      @d = Gcm::Device.new
+    end
     @d.registration_id = @phone.gcmid
     @d.save!
 
