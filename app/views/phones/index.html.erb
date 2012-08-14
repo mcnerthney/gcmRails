@@ -1,0 +1,19 @@
+<h1>Listing phones</h1>
+
+<table>
+  <tr>
+    <th>Device Id</th>
+    <th></th>
+  </tr>
+
+<% @phones.each do |phone| %>
+  <tr>
+    <td><%= link_to phone.deviceid, phone %></td>
+    <td><%= link_to 'Destroy', phone, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Phone', new_phone_path %>

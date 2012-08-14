@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Deviceid:</b>
+  <%= @phone.deviceid %>
+</p>
+
+<p>
+  <b>Gcmid:</b>
+  <%= @phone.gcmid %>
+</p>
+<%= form_for(@message) do |f| %>
+  <%= f.hidden_field :phone_id, :value => @phone.id %>
+  <div class="field">
+    <%= f.label "Push Notification Message" %><br />
+    <%= f.text_area :body %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+    <% if @phone.messages.any? %>
+      <h3>Messages (<%= @phone.messages.count %>)</h3>
+      <ol class="microposts">
+        <%= render @messages, :phone_id => @phone.id %>
+      </ol>
+      <%= will_paginate @messages %>
+    <% end %>
+
+
+<%= link_to 'Edit', edit_phone_path(@phone) %> |
+<%= link_to 'Back', phones_path %>

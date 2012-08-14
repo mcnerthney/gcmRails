@@ -17,16 +17,6 @@ class UsersController < ApplicationController
     @user = User.new
   end
   
-  def register
-    @user = User.find_by_email(params[:email])
-    if @user != nil 
-      @user.update_attribute(:Gcmid, params[:gid])
-      redirect_to @user
-	else 
-      redirect_to root_path
-    end
-    
-  end
   
 
   def create
