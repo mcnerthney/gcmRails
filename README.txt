@@ -9,6 +9,6 @@ To initialize and run the server:
     $ bundle exec rake db:migrate
     $ rails s
 
-Use the Android companiion project https://github.com/mcnerthney/gcmAndroid to phones and receive notifications.
+Use the Android companion project https://github.com/mcnerthney/gcmAndroid to register and receive notifications.
 
 
